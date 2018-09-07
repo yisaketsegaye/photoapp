@@ -18,15 +18,20 @@ end
 
 def process_payment
 
-customer = Stripe::Customer.create email: email, source: token
 
-Stripe::Charge.create customer: customer.id,
+  customer = Stripe::Customer.create(
+    :email => email,
+    :source  => token
+  )
 
-amount: 1000,
+  
+  Stripe::Charge.create(
+    :customer    => customer.id,
+    :amount      => 1000,
+    :description => 'Premium',
+    :currency    => 'usd'
+  )
 
-description: 'Premium',
-
-currency: 'usd'
   
   
 
